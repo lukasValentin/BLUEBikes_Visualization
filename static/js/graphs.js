@@ -1,8 +1,17 @@
-//this is the script where the interactive graphs for the assignment are generated including the leaflet map
-//adopted from an example provided by http://adilmoujahid.com//posts/2016/08/interactive-data-visualization-geospatial-d3-dc-leaflet-python/
-//for the BLUEBikes dataset
+/*
+ * @name: graphs.js
+ * 
+ * @purpose: This small script shows historical bike trip data provided by BLUEBikes (https://www.bluebikes.com/)
+ * in interactive manner using D3 and Leaflet libraries. Sample data provided as JSON is used covering approx.
+ * half of October 2019 (however, it is also possible to use custom data instead). The data is visualized using
+ * D3 graphs and a leaflet heatmap.
+ * 
+ * @author: Lukas Graf based on a idea by Adil Moujahid https://github.com/adilmoujahid, 2019/2020
+ * 
+ */
 
-tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/BLUEBikes.json";
+// link to sample JSON data
+tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes.json";
 
 //query JSON data using Ajax/HTTP GET
 var jsonTripsData = $.ajax({
@@ -34,7 +43,7 @@ var jsonTripsData = $.ajax({
 	}
 });
 
-//define graphs
+//define graphs (this part was inspired by https://github.com/adilmoujahid)
 var makeGraphs = function(recordsJson) {
 
 	// clean data
