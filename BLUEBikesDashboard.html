@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BLUEBikes Dashboard</title>
+
+  <meta charset="utf-8">
+  <meta name="description" content="Dashboard application for visualizing historical BLUEBikes trip data">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" href="https://d21xlh2maitm24.cloudfront.net/bst/favicon-2.ico?mtime=20180503154756"> 
+  <link rel="stylesheet" href="./static/lib/css//bootstrap.min.css">
+  <link rel="stylesheet" href="./static/lib/css/keen-dashboards.css">
+  <link rel="stylesheet" href="./static/lib/css/dc.min.css">
+  <link rel="stylesheet" href="./static/lib/css/leaflet.css">
+  <link rel="stylesheet" href="./static/css/custom.css">
+  
+
+
+</head>
+<body class="application">
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="./">BLUEBikes Trips Data Geo-Visualization</a>
+      </div>
+      <ul class="nav navbar-nav">
+      	<li class="active"><a href="#">Home</a></li>
+      	<li><a href="https://www.bluebikes.com/">BLUEBikes Boston</a></li>
+      	<li><a href="https://member.bluebikes.com/map/">BLUEBikes Station Map</a></li>
+      </ul>
+    </div>
+  </div>
+  
+   <form>
+   	<label>
+    	Start Date for Trips Data Analysis<br>
+    	<input type="date" id="startDate" value="2019-10-01">
+  	</label>
+    <br>
+  	<label>
+  		End Date for Trips Data Analysis<br>
+    	<input type="date" id="endDate" value="2019-10-02">
+  	</label>
+   </form>
+
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <div class="col-sm-6">
+        <div class="row">
+
+          <!-- Time Chart showing number of trips in selected time period--> 
+          <div class="col-sm-12">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Number of Trips
+              </div>
+              <div class="chart-stage">
+                <div id="time-chart"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Time Chart --> 
+
+          <!-- User types -->
+          <div class="col-sm-6">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                User Types
+              </div>
+              <div class="chart-stage">
+                <div id="usertype-chart"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Brand -->
+
+
+          <div class="col-sm-6">
+
+            <div class="row">
+            <!-- Gender -->
+            <div class="col-sm-12">
+              <div class="chart-wrapper">
+                <div class="chart-title">
+                  Gender
+                </div>
+                <div class="chart-stage">
+                  <div id="gender-chart"></div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <!-- Gender -->
+
+            <!-- Age Segments -->
+            <div class="row">
+            <div class="col-sm-12">
+              <div class="chart-wrapper">
+                <div class="chart-title">
+                  Age Segment
+                </div>
+                <div class="chart-stage">
+                  <div id="agesegment-chart"></div>
+                </div>
+              </div>
+            </div>
+            <!-- Age Segment -->
+          </div>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+      <div class="col-sm-4">
+
+        <div class="row">
+          <!-- Map using Leaflet -->  
+          <div class="col-sm-14"> 
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Leaflet Visualization
+              </div>
+              <div class="chart-stage">
+                <div id="leafletmap" style="width: 400px; height: 380px"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Map -->  
+        </div>
+
+        <div class="row">
+          <!-- Number of trips -->  
+          <div class="col-sm-12"> 
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Number of Trips
+              </div>
+              <div class="chart-stage">
+                <div id="number-trips"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Number of events -->  
+        </div>
+        
+        <div class="row">
+          <!-- Number of trips -->  
+          <div class="col-sm-12"> 
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Average Trip Duration
+              </div>
+              <div class="chart-stage">
+                <div id="average_duration"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Number of events -->  
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <hr>
+  <p class="small text-muted">CSS built with &#9829; by <a href="https://keen.io">Keen IO</a> Fork this project on <a href="https://github.com/lukasValentin/BLUEBikes_Visualization">GitHub</a> </p>
+
+  <script src="./static/lib/js/jquery.min.js"></script>
+  <script src="./static/lib/js/bootstrap.min.js"></script>
+  <script src="./static/lib/js/underscore-min.js"></script>
+  <script src="./static/lib/js/crossfilter.js"></script>
+  <script src="./static/lib/js/d3.min.js"></script>
+  <script src="./static/lib/js/dc.min.js"></script>
+  <script src="./static/lib/js/queue.js"></script>
+  <script src="./static/lib/js/leaflet.js"></script>
+  <script src="./static/lib/js/leaflet-heat.js"></script>
+  <script src="./static/lib/js/keen.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+  <!-- include the js file where the graphs and the leaflet are defined -->
+  <script src='./static/js/graphs.js' type='text/javascript'></script>
+
+
+</body>
+</html>
