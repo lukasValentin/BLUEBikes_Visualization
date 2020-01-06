@@ -53,7 +53,7 @@ def prepare(df):
                  'usertype', 'gender', 'age_segments']
     df = df[keep_cols]
     # convert to JSON
-    return df.to_json('BLUEBikes.json')
+    df.to_json('BLUEBikes.json')
 
 
 if __name__ == '__main__':
@@ -64,5 +64,6 @@ if __name__ == '__main__':
     downloaded = download_data(url, zip_file)
     # unpack the downloaded data
     unpacked = unpack(downloaded)
-    # prepare data and convert to json
-    json_data = prepare(unpacked)
+    # prepare data and convert to json (will be stored in the current working directory
+    # as 'bluebikes.json'
+    prepare(unpacked)
