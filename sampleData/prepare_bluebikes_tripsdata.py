@@ -52,10 +52,17 @@ def prepare(df):
                  'starttime', 'tripduration', \
                  'usertype', 'gender', 'age_segments']
     df = df[keep_cols]
-    # select first 10 000 entries
-    df = df.iloc[0:10000,:]
-    # convert to JSON
-    df.to_json('BLUEBikes.json', orient='records')
+    return df
+
+
+def filter_date(df, date):
+    """filters a data with a particular date from the dataframe"""
+    # the user defined date from the dataframe
+    date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    mask = (pd.to_datetime(df['starttime']).dt.date == date.date())
+    # mask out the other values
+    df_masked = df.loc[mask]
+    return df_masked
 
 
 if __name__ == '__main__':
@@ -68,4 +75,12 @@ if __name__ == '__main__':
     unpacked = unpack(downloaded)
     # prepare data and convert to json (will be stored in the current working directory
     # as 'bluebikes.json'
-    prepare(unpacked)
+    df = prepare(unpacked)
+    # filter by user-defined dates and convert to json
+    date1 = "2019-10-01"  # Tuesday
+    date2 = "2019-10-13"  # Sunday
+    df_weekday = filter_date(df, date1)
+    df_weekend = filter_date(df, date2)
+    # export to json (to be hosted on a server)
+    df_weekday.to_json('BLUEBikes_weekday.json', orient='records')
+    df_weekend.to_json('BLUEBikes_weekend.json', orient='records')
