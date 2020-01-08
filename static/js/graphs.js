@@ -1,16 +1,7 @@
-/*
- * @name: graphs.js
- * 
- * @purpose: This small script shows historical bike trip data provided by BLUEBikes (https://www.bluebikes.com/)
- * in interactive manner using D3 and Leaflet libraries. Sample data provided as JSON is used covering approx.
- * half of October 2019 (however, it is also possible to use custom data instead). The data is visualized using
- * D3 graphs and a leaflet heatmap.
- * 
- * @author: Lukas Graf based on a idea by Adil Moujahid https://github.com/adilmoujahid, 2019/2020
- * 
- */
+//this is the script where the interactive graphs for the assignment are generated including the leaflet map
+//adopted from an example provided by http://adilmoujahid.com//posts/2016/08/interactive-data-visualization-geospatial-d3-dc-leaflet-python/
+//for the BLUEBikes dataset
 
-// link to sample JSON data
 tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes.json";
 
 //query JSON data using Ajax/HTTP GET
@@ -25,30 +16,40 @@ var jsonTripsData = $.ajax({
 		var startTime = new Date(startDate.concat('T00:00:00Z'));
 		var endDate = document.getElementById("endDate").value;
 		var endTime = new Date(endDate.concat('T23:59:59Z'))
+
 		// filter json data between start and end time
-		var resultData = data.filter(function (a) {
+		var resultData = [data].filter(function (a) {
 			var times = a.starttime || {};
 			// extract all date strings
 			hitTimes = Object.keys(times);
-			// convert strings to Date objcts
-			hitTimeMatchExists = hitTimes.some(function(dateStr) {
+			// convert strings to Date objects
+			hitDates = Object.values(times);
+			hitTimeMatchExists = hitDates.some(function(dateStr) {
 				var date = new Date(dateStr);
 				return date >= startTime && date <= endTime
 			});
 			return hitTimeMatchExists;
 		});
-		console.log(resultData);
-		// call makeGraphs
-		makeGraphs(resultData);
+		if (resultData != null) {
+			// call makeGraphs
+			makeGraphs(resultData);
+		} else {
+			alert("Didn't found any date for the time you specified")
+		}
+		
 	}
 });
 
-//define graphs (this part was inspired by https://github.com/adilmoujahid)
+//define graphs
 var makeGraphs = function(recordsJson) {
 
 	// clean data
 	var records = recordsJson;
 	var dateFormat = d3.time.format("%Y-%m-%d %H:%M:%S");
+	
+	var test = records[0]["starttime"][0];
+	console.log(test);
+	console.log(dateFormat.parse(test));
 
 	// clean the timestamps to allow for temporal aggregation
 	records.forEach(function(d) {
@@ -226,3 +227,4 @@ var makeGraphs = function(recordsJson) {
 	dc.renderAll();
 
 };
+

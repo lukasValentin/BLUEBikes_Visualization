@@ -53,7 +53,7 @@ def prepare(df):
                  'usertype', 'gender', 'age_segments']
     df = df[keep_cols]
     # convert to JSON
-    df.to_json('BLUEBikes.json')
+    df.to_json('BLUEBikes.json', orient='records')
 
 
 if __name__ == '__main__':
