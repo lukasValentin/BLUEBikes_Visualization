@@ -10,15 +10,16 @@ var jsonTripsData = $.ajax({
 	url: tripsDataURL,
 	dataType: "json",
 	success: function (data) {
+		
 		// filter json by date range between start and end date
 		var startDate = document.getElementById("startDate").value;
 		// construct a timestamp from the user defined dates - always start and end at midnight
 		var startTime = new Date(startDate.concat('T00:00:00Z'));
 		var endDate = document.getElementById("endDate").value;
 		var endTime = new Date(endDate.concat('T23:59:59Z'))
-
+		
 		// filter json data between start and end time
-		var resultData = [data].filter(function (a) {
+		var resultData = data.filter(function (a) {
 			var times = a.starttime || {};
 			// extract all date strings
 			hitTimes = Object.keys(times);
@@ -32,6 +33,7 @@ var jsonTripsData = $.ajax({
 		});
 		if (resultData != null) {
 			// call makeGraphs
+			console.log(resultData);
 			makeGraphs(resultData);
 		} else {
 			alert("Didn't found any date for the time you specified")
@@ -46,10 +48,6 @@ var makeGraphs = function(recordsJson) {
 	// clean data
 	var records = recordsJson;
 	var dateFormat = d3.time.format("%Y-%m-%d %H:%M:%S");
-	
-	var test = records[0]["starttime"][0];
-	console.log(test);
-	console.log(dateFormat.parse(test));
 
 	// clean the timestamps to allow for temporal aggregation
 	records.forEach(function(d) {

@@ -52,6 +52,8 @@ def prepare(df):
                  'starttime', 'tripduration', \
                  'usertype', 'gender', 'age_segments']
     df = df[keep_cols]
+    # select first 10 000 entries
+    df = df.iloc[0:10000,:]
     # convert to JSON
     df.to_json('BLUEBikes.json', orient='records')
 
