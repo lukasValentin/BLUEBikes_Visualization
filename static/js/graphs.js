@@ -2,7 +2,16 @@
 //adopted from an example provided by http://adilmoujahid.com//posts/2016/08/interactive-data-visualization-geospatial-d3-dc-leaflet-python/
 //for the BLUEBikes dataset
 
-tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes.json";
+// select an example dataset first
+
+var selection = document.getElementById("selection").value;
+
+var tripsDataURL = "";
+if (selection === "Example Weekday (1st Oct 2019)") {
+	tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes_weekday.json";
+} else if (selection === "Example Weekend (13th Oct 2019)") {
+	tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes_weekend.json";
+}
 
 //query JSON data using Ajax/HTTP GET
 var jsonTripsData = $.ajax({
