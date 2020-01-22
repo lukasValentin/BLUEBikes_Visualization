@@ -32,16 +32,17 @@
       </ul>
     </div>
   </div>
+  
+  <select class="div-toggle" data-target=".my-info-1">
+  	<option value="weekday" data-show=".weekday">Example Weekday (1st Oct. 2019)</option>
+  	<option value="weekend" data-show=".weekend">Example Weekend (13th Oct. 2019)</option>
+  </select>
 
-
-  <form>
-  <label>Select a sample dataset:
-    <select id="selection" size="2">
-      <option>Example Weekday (1st Oct 2019)</option>
-      <option>Example Weekend (13th Oct 2019)</option>
-    </select>
-  </label>
-  </form>
+  <div class="my-info-1">
+  	<div class="weekday hide">BLUEBikes sample values for a randomly chosen weekday...</div>
+  	<div class="weekend hide">BLUEBikes sample values for a randomly chosen weekend...</div>
+  </div>
+  
 
   <div class="container-fluid">
 
@@ -123,10 +124,25 @@
           <div class="col-sm-14"> 
             <div class="chart-wrapper">
               <div class="chart-title">
-                Leaflet Visualization
+                Leaflet Visualization 1
               </div>
               <div class="chart-stage">
-                <div id="leafletmap" style="width: 400px; height: 380px"></div>
+                <div id="leafletmap1" style="width: 500px; height: 380px"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Map -->  
+        </div>
+        
+        <div class="row">
+          <!-- Map using Leaflet -->  
+          <div class="col-sm-14"> 
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Leaflet Visualization 2
+              </div>
+              <div class="chart-stage">
+                <div id="leafletmap2" style="width: 500px; height: 380px"></div>
               </div>
             </div>
           </div>

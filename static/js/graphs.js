@@ -2,29 +2,39 @@
 //adopted from an example provided by http://adilmoujahid.com//posts/2016/08/interactive-data-visualization-geospatial-d3-dc-leaflet-python/
 //for the BLUEBikes dataset
 
-// select an example dataset first
+// select an example dataset first​
 
-var selection = document.getElementById("selection").value;
-
-var tripsDataURL = "";
-if (selection === "Example Weekday (1st Oct 2019)") {
-	tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes_weekday.json";
-} else if (selection === "Example Weekend (13th Oct 2019)") {
-	tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes_weekend.json";
-}
-
-//query JSON data using Ajax/HTTP GET
-var jsonTripsData = $.ajax({
-	data: {get_param: 'value'},
-	url: tripsDataURL,
-	dataType: "json",
-	success: function (data) {
-		makeGraphs(data);	
+$(document).on('change', '.div-toggle', function() {
+	var target = $(this).data('target');
+	var show = $('option:selected', this).data('show');
+	if (show == '.weekday') {
+		tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes_weekday.json";
+		leafletID = 'leafletmap1'
+	} else {
+		tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes_weekend.json"; 
+		leafletID = 'leafletmap2';
 	}
+	
+	//query JSON data using Ajax/HTTP GET
+	var jsonTripsData = $.ajax({
+		data: {get_param: 'value'},
+		url: tripsDataURL,
+		dataType: "json",
+		success: function (data) {
+			makeGraphs(data, leafletID);	
+		}
+	});
+	$(target).children().addClass('hide');
+	$(show).removeClass('hide');
+	// document.getElementById('leafletmap').innerHTML = "";
+});
+$(document).ready(function(){
+	$('.div-toggle').trigger('change');
 });
 
+
 //define graphs
-var makeGraphs = function(records) {
+var makeGraphs = function(records, leafletID) {
 
 	// clean data
 	var dateFormat = d3.time.format("%Y-%m-%d %H:%M:%S");
@@ -123,8 +133,11 @@ var makeGraphs = function(records) {
     .xAxis().ticks(4);
 
 	// leaflet map
-	var map = L.map('leafletmap');
-
+	// as there are some problems reloading the map container, the leaflet maps are drawn separately
+	// this is just a quick hack and should be solved in a better way
+	var map = null;
+	map = new L.map(leafletID);
+	
 	var drawMap = function(){
 
 		// set leaflet settings and center view to area of Boston, MA
@@ -168,6 +181,7 @@ var makeGraphs = function(records) {
 	});
 
 	dc.renderAll();
+	map.invalidateSize();
 
 };
 
