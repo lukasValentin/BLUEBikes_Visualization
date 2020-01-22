@@ -1,32 +1,27 @@
 //this is the script where the interactive graphs for the assignment are generated including the leaflet map
 //adopted from an example provided by http://adilmoujahid.com//posts/2016/08/interactive-data-visualization-geospatial-d3-dc-leaflet-python/
 //for the BLUEBikes dataset
-
-// select an example dataset first​
-
+var map = null;
+// select an example dataset first​ based on '.div-toggle'
 $(document).on('change', '.div-toggle', function() {
 	var target = $(this).data('target');
 	var show = $('option:selected', this).data('show');
 	if (show == '.weekday') {
 		tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes_weekday.json";
-		leafletID = 'leafletmap1'
 	} else {
 		tripsDataURL = "https://raw.githubusercontent.com/lukasValentin/BLUEBikes_Visualization/master/sampleData/BLUEBikes_weekend.json"; 
-		leafletID = 'leafletmap2';
 	}
-	
 	//query JSON data using Ajax/HTTP GET
 	var jsonTripsData = $.ajax({
 		data: {get_param: 'value'},
 		url: tripsDataURL,
 		dataType: "json",
-		success: function (data) {
-			makeGraphs(data, leafletID);	
+		success: function (data, map) {
+			makeGraphs(data);	
 		}
 	});
 	$(target).children().addClass('hide');
 	$(show).removeClass('hide');
-	// document.getElementById('leafletmap').innerHTML = "";
 });
 $(document).ready(function(){
 	$('.div-toggle').trigger('change');
@@ -34,7 +29,7 @@ $(document).ready(function(){
 
 
 //define graphs
-var makeGraphs = function(records, leafletID) {
+var makeGraphs = function(records) {
 
 	// clean data
 	var dateFormat = d3.time.format("%Y-%m-%d %H:%M:%S");
@@ -133,12 +128,8 @@ var makeGraphs = function(records, leafletID) {
     .xAxis().ticks(4);
 
 	// leaflet map
-	// as there are some problems reloading the map container, the leaflet maps are drawn separately
-	// this is just a quick hack and should be solved in a better way
-	var map = null;
-	map = new L.map(leafletID);
 	
-	var drawMap = function(){
+	var drawMap = function(map){
 
 		// set leaflet settings and center view to area of Boston, MA
 		map.setView([42.36, -71.09], 5);
@@ -166,7 +157,18 @@ var makeGraphs = function(records, leafletID) {
 	};
 
 	// Draw Map
-	drawMap();
+	var container = L.DomUtil.get('leafletmap');
+	if(container != null){
+		console.log(container);
+		container._leaflet_id = null;
+		console.log(map);
+		// remove existing map to avoid "map container already defined error"
+		if (map != undefined || map != null) {
+			map.remove();
+		}
+	}
+	map = new L.map('leafletmap');
+	drawMap(map);
 
 	// Update the leaflet map if any dc chart get filtered
 	dcCharts = [timeChart, genderChart, ageSegmentChart, userTypeChart];
@@ -181,7 +183,6 @@ var makeGraphs = function(records, leafletID) {
 	});
 
 	dc.renderAll();
-	map.invalidateSize();
 
 };
 
