@@ -16,5 +16,3 @@ To use the example shown here, all you need to do is clone the repository and th
 
 However, it is also **`possible to call up the dashboard with other data`**. To do this, simply alter the download link to customize BLUEBikes (about another month) in the [Python script](https://github.com/lukasValentin/BLUEBikes_Visualization/blob/master/sampleData/prepare_bluebikes_tripsdata.py) and host the JSON document on any server so that it is accessible via the Internet. Then adjust the URL in the [Javascript](https://github.com/lukasValentin/BLUEBikes_Visualization/blob/master/static/js/graphs.js) and the `**div-togle**`element in the [HTML file](https://github.com/lukasValentin/BLUEBikes_Visualization/blob/master/BLUEBikesDashboard.html).
 
-Concurrently, there is still an **issue** with the leaflet map container that cannot be updated automatically right now. Therefore, each day has its own leaflet container.
-
