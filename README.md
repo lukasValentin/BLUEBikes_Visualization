@@ -1,7 +1,7 @@
 # BLUEBikes_Visualization
 Dashboard based Visualization of Boston BLUEBikes Trips Data using D3 and Leaflet JS libraries
 
-![BLUEBikes Geovisualization Dashboard](/path/to/image.png)
+![BLUEBikes Geovisualization Dashboard](https://github.com/lukasValentin/BLUEBikes_Visualization/blob/master/example_dashboard.png)
 
 The dashboard was strongly inspired by [Adil Moujahid work](https://github.com/adilmoujahid/kaggle-talkingdata-visualization) and re-uses parts of the repository in adopted way for plotting and mapping the data. The way the data is parsed and processed, however, was developed independently from his work as well as the possibility to switch between two **sample datasets**.
 
