@@ -5,6 +5,8 @@ Dashboard based Visualization of Boston BLUEBikes Trips Data using D3 and Leafle
 
 The dashboard was strongly inspired by [Adil Moujahid work](https://github.com/adilmoujahid/kaggle-talkingdata-visualization) and re-uses parts of the repository in adopted way for plotting and mapping the data. The way the data is parsed and processed, however, was developed independently from his work as well as the possibility to switch between two **sample datasets**.
 
+More information can also be found in the provided [report](). 
+
 ## Overview
 Using this dashboard, it is possible to visualize and analyze trip data provided by [BLUEBikes](https://www.bluebikes.com/) in space and time. In addition to a heat map that shows where a particularly large number of trips took place, information about the users (age, gender, temporal distribution of trips over the day, and average trip duration) is displayed using diagrams. [Leaflet](https://leafletjs.com/) and [D3](https://d3js.org/) are used for this. The trip data is made [publicly available](https://www.bluebikes.com/system-data) by BLUEBikes for (scientific) analysis via Amazon Web Services.
 
