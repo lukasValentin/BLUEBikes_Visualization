@@ -132,7 +132,7 @@ var makeGraphs = function(records) {
 	var drawMap = function(map){
 
 		// set leaflet settings and center view to area of Boston, MA
-		map.setView([42.36, -71.09], 5);
+		map.setView([42.36, -71.09], 9);
 		
 		// define basemap CartoDB Dark
 		
